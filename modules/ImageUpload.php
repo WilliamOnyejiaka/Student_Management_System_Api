@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 namespace Module;
-ini_set("display_errors", 1);
+// ini_set("display_errors", 1);
 
 require_once __DIR__ . "/../vendor/autoload.php";
 include_once __DIR__ . "/../config/config.php";
