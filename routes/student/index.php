@@ -25,10 +25,10 @@ $student->post("/upload-image", fn() => $controller->protected_controller(functi
         'message' => "image file missing"
     ]);
 
-    (!$_FILES['image_file']['tmp_name']) && $response->send_response(404, [
-        'error' => true,
-        'message' => "image file not valid"
-    ]);
+    // (!$_FILES['image_file']['tmp_name']) && $response->send_response(404, [
+    //     'error' => true,
+    //     'message' => "image file not valid"
+    // ]);
 
     $upload_response = (new ImageUpload())->uploadImage($_FILES['image_file']['tmp_name']);
 
