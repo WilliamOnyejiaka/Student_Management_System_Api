@@ -9,7 +9,6 @@ include_once __DIR__ . "/../config/config.php";
 use Cloudinary\Configuration\Configuration;
 use Cloudinary\Api\Upload\UploadApi;
 
-
 class ImageUpload {
 
     private string $cloud_name;

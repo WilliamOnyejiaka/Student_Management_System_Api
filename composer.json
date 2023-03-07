@@ -16,7 +16,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "cloudinary/cloudinary_php": "dev-master",
-        "william-onyejiaka/wonder_ral_v3": "dev-main"
+        "william-onyejiaka/wonder_ral_v3": "dev-main",
+        "cloudinary/cloudinary_php": "2.10.0"
     }
 }
