@@ -18,41 +18,40 @@ $student = new Router("student", true);
 $controller = new Controller();
 
 $student->post("/upload-image", fn() => $controller->protected_controller(function ($payload, $body, $response) {
-    $image_file_exists = $_FILES['image_file'] ?? false;
+    // $image_file_exists = $_FILES['image_file'] ?? false;
 
-    (!$image_file_exists) && $response->send_response(404, [
-        'error' => true,
-        'message' => "image file missing"
-    ]);
+    // (!$image_file_exists) && $response->send_response(404, [
+    //     'error' => true,
+    //     'message' => "image file missing"
+    // ]);
 
     // $upload_response = (new ImageUpload())->uploadImage($_FILES['image_file']['tmp_name']);
-    $upload_response = (new ImageUpload())->uploadImage($_FILES['image_file']['full_path']);
 
-    (!$upload_response) && $response->send_response(500, [
-        'error' => true,
-        'message' => "something went wrong"
-    ]);
+    // (!$upload_response) && $response->send_response(500, [
+    //     'error' => true,
+    //     'message' => "something went wrong"
+    // ]);
 
-    $id = $payload->data->id;
-    $studentDB = new Student();
-    $image_url = $upload_response['url'];
+    // $id = $payload->data->id;
+    // $studentDB = new Student();
+    // $image_url = $upload_response['url'];
 
-    if($studentDB->update_image_name($id,$image_url)){
-        $response->send_response(404, [
-            'error' => false,
-            'message' => "image added successfully"
-        ]);
-    }
-
-    $response->send_response(500, [
-        'error' => true,
-        'message' => "something went wrong"
-    ]);
+    // if($studentDB->update_image_name($id,$image_url)){
+    //     $response->send_response(404, [
+    //         'error' => false,
+    //         'message' => "image added successfully"
+    //     ]);
+    // }
 
     // $response->send_response(500, [
     //     'error' => true,
-    //     'message' => $_FILES['image_file']
+    //     'message' => "something went wrong"
     // ]);
+
+    $response->send_response(500, [
+        'error' => true,
+        'message' => $_FILES['image_file']
+    ]);
 }));
 
 $student->get('/get-student-image',fn() => $controller->protected_controller(function($payload,$body,$response){
