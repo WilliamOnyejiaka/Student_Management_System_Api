@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "42fa88f27c987aa0ddac45f2d712a665",
+    "content-hash": "a4dc14f5456fc7df6934232eb904ef81",
     "packages": [
         {
             "name": "cloudinary/cloudinary_php",
-            "version": "2.10.0",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:cloudinary/cloudinary_php.git",
-                "reference": "84edefdd9e636371f2a71490b2a08b3e769e4f7d"
+                "url": "https://github.com/cloudinary/cloudinary_php.git",
+                "reference": "e03e4893f286cfcf798321dd2184b49de8652e4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/84edefdd9e636371f2a71490b2a08b3e769e4f7d",
-                "reference": "84edefdd9e636371f2a71490b2a08b3e769e4f7d",
+                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/e03e4893f286cfcf798321dd2184b49de8652e4f",
+                "reference": "e03e4893f286cfcf798321dd2184b49de8652e4f",
                 "shasum": ""
             },
             "require": {
@@ -27,7 +27,7 @@
                 "monolog/monolog": "^1|^2|^3",
                 "php": ">=5.6.0",
                 "psr/log": "^1|^2|^3",
-                "teapot/status-code": "^1|^2"
+                "shrikeh/teapot": "^1|^2"
             },
             "require-dev": {
                 "consolidation/robo": "~1",
@@ -66,9 +66,10 @@
             ],
             "support": {
                 "email": "info@cloudinary.com",
-                "issues": "https://github.com/cloudinary/cloudinary_php/issues"
+                "issues": "https://github.com/cloudinary/cloudinary_php/issues",
+                "source": "https://github.com/cloudinary/cloudinary_php/tree/2.9.0"
             },
-            "time": "2023-01-12T14:35:09+00:00"
+            "time": "2022-09-18T16:51:26+00:00"
         },
         {
             "name": "cloudinary/transformation-builder-sdk",
@@ -1027,6 +1028,63 @@
             "time": "2019-03-08T08:55:37+00:00"
         },
         {
+            "name": "shrikeh/teapot",
+            "version": "v2.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shrikeh/teapot.git",
+                "reference": "2fea5720963f22eedb920ee65b9d643bfa3e8daf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shrikeh/teapot/zipball/2fea5720963f22eedb920ee65b9d643bfa3e8daf",
+                "reference": "2fea5720963f22eedb920ee65b9d643bfa3e8daf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5",
+                "psr/http-message": "^1.0",
+                "teapot/status-code": "^1.0"
+            },
+            "require-dev": {
+                "behat/behat": "^3.2",
+                "bossa/phpspec2-expect": "^2.0",
+                "escapestudios/symfony2-coding-standard": "^2.9",
+                "phpspec/phpspec": "~3.0.0",
+                "squizlabs/php_codesniffer": "^2.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Teapot\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barney Hanlon",
+                    "email": "barney@shrikeh.net"
+                },
+                {
+                    "name": "Andreas Möller",
+                    "email": "am@localheinz.com"
+                }
+            ],
+            "description": "PHP HTTP Response Status library",
+            "homepage": "https://shrikeh.github.io/teapot/",
+            "keywords": [
+                "http"
+            ],
+            "support": {
+                "issues": "https://github.com/shrikeh/teapot/issues",
+                "source": "https://github.com/shrikeh/teapot/tree/master"
+            },
+            "time": "2017-09-01T13:56:48+00:00"
+        },
+        {
             "name": "symfony/deprecation-contracts",
             "version": "dev-main",
             "source": {
@@ -1347,23 +1405,23 @@
         },
         {
             "name": "teapot/status-code",
-            "version": "2.0.0",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teapot-php/status-code.git",
-                "reference": "39cce90f07bf2a906d19e6de9418e0382e75e0bf"
+                "reference": "7aaba4364645ebb9d3a36267c9b3a32206d3042b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teapot-php/status-code/zipball/39cce90f07bf2a906d19e6de9418e0382e75e0bf",
-                "reference": "39cce90f07bf2a906d19e6de9418e0382e75e0bf",
+                "url": "https://api.github.com/repos/teapot-php/status-code/zipball/7aaba4364645ebb9d3a36267c9b3a32206d3042b",
+                "reference": "7aaba4364645ebb9d3a36267c9b3a32206d3042b",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.4 || ^7.0 || ^8.0"
             },
             "require-dev": {
-                "squizlabs/php_codesniffer": "^3.7.1"
+                "squizlabs/php_codesniffer": "^3.5.8"
             },
             "type": "library",
             "autoload": {
@@ -1379,22 +1437,18 @@
                 {
                     "name": "Barney Hanlon",
                     "email": "barney@shrikeh.net"
-                },
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com"
                 }
             ],
             "description": "PHP HTTP Response Status code library",
-            "homepage": "https://github.com/teapot-php/status-code",
+            "homepage": "http://shrikeh.github.com/teapot",
             "keywords": [
                 "http"
             ],
             "support": {
                 "issues": "https://github.com/teapot-php/status-code/issues",
-                "source": "https://github.com/teapot-php/status-code/tree/2.0.0"
+                "source": "https://github.com/teapot-php/status-code/tree/v1.1.2"
             },
-            "time": "2022-09-22T13:59:09+00:00"
+            "time": "2020-11-03T17:14:32+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
