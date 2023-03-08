@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-// ini_set("display_errors", 1);
+ini_set("display_errors", 1);
 
 require_once __DIR__ . "/../../vendor/autoload.php";
 include_once __DIR__ . "/../../config/config.php";
@@ -42,7 +42,7 @@ $student->post("/upload-image", fn() => $controller->protected_controller(functi
     $image_url = $upload_response['url'];
 
     if($studentDB->update_image_name($id,$image_url)){
-        $response->send_response(404, [
+        $response->send_response(200, [
             'error' => false,
             'message' => "image added successfully"
         ]);
@@ -80,6 +80,9 @@ $student->post('/file', fn() => $controller->public_controller(function ($body, 
     ]);
 }
 ));
+
+
+
 
 $student->run();
 
