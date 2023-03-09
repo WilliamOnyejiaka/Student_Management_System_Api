@@ -16,11 +16,14 @@ $controller = new Controller();
 
 $token->get('/access-token', fn() => $controller->access_token_controller(function ($payload, $body, $response) {
     $id = $payload->data->id;
-    $user_type = $payload->aud;
+    $type = $payload->data->type;
+    $user_type = $type;
+
     $data = [
-        'needed_values' => ['id'],
+        'needed_values' => ['id','type'],
         'data' => [
             'id' => $id,
+            'type' => $type
     ]];
 
     $token_attributes = new TokenAttributes($data,$user_type);
@@ -28,7 +31,8 @@ $token->get('/access-token', fn() => $controller->access_token_controller(functi
 
     $response->send_response(200, [
         'error' => false,
-        'token' => $access_token
+        'token' => $access_token,
+        'aud' => $payload->data
     ]);
 }));
 

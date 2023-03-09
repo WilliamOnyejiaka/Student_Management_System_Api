@@ -21,6 +21,11 @@ $admin->post("/sign-up", fn() => $controller->protected_controller(function ($pa
 
     $admin_type = $payload->aud;
 
+    (!in_array($admin_type,['admin','super_admin','main_admin'])) && $response->send_response(401, [
+        'error' => true,
+        'message' => "user not authorized"
+    ]);
+
     $validator = new Validator();
     $validator->validate_body($body,['name','email','password',"type"]);
     [$name,$email,$password,$type] = [$body->name,$body->email,$body->password,$body->type];
@@ -94,7 +99,7 @@ $admin->get("/login",fn() => $controller->public_controller(function($body,$resp
             $active_admin = (new Serializer($needed_values))->tuple($admin->get_admin_with_email($email));
 
             $data = [
-                'needed_values' => ['id'],
+                'needed_values' => ['id','type'],
                 'data' => $active_admin,
             ];
 
@@ -123,6 +128,127 @@ $admin->get("/login",fn() => $controller->public_controller(function($body,$resp
         'message' => "email does not exist"
     ]);
 }));
+
+$admin->patch("/update-name",fn() => $controller->protected_controller(function($payload,$body,$response){
+    $admin_type = $payload->aud;
+
+    (!in_array($admin_type, ['admin', 'super_admin', 'main_admin'])) && $response->send_response(401, [
+        'error' => true,
+        'message' => "user not authorized"
+    ]);
+
+
+    $validator = new Validator();
+    $validator->validate_body($body, ['name']);
+    $name = $body->name;
+    $id = $payload->data->id;
+
+    $admin = new Admin();
+
+    if($admin->update_admin_name($id,$name)){
+        $response->send_response(200,[
+            'error' => false,
+            'message' => "name updated successfully",
+        ]);
+    }
+
+    $response->send_response(500, [
+        'error' => true,
+        'message' => "something went wrong",
+    ]);
+
+}));
+
+$admin->patch("/update-email", fn() => $controller->protected_controller(function ($payload, $body, $response) {
+    $admin_type = $payload->aud;
+
+    (!in_array($admin_type, ['admin', 'super_admin', 'main_admin'])) && $response->send_response(401, [
+        'error' => true,
+        'message' => "user not authorized"
+    ]);
+
+
+    $validator = new Validator();
+    $validator->validate_body($body, ['email']);
+
+    $email = $body->email;
+    $id = $payload->data->id;
+
+    $validator->validate_email_with_response($email);
+
+    $admin = new Admin();
+    $email_exits = (new Serializer(['email']))->tuple($admin->get_admin_with_email($email));
+
+    (((isset($email_exits['email']) && $email_exits['email'] == $email) && $response->send_response(200,[
+        'error' => true,
+        'message' => "new email required"
+    ])));
+
+    if(!$email_exits){
+        if ($admin->update_admin_email($id, $email)) {
+            $response->send_response(200, [
+                'error' => false,
+                'message' => "email updated successfully",
+            ]);
+        }
+
+        $response->send_response(500, [
+            'error' => true,
+            'message' => "something went wrong",
+        ]);
+    }
+
+    $response->send_response(400,[
+        'error' => true,
+        'message' => "email exits"
+    ]);
+}));
+
+$admin->patch("/update-password", fn() => $controller->protected_controller(function ($payload, $body, $response) {
+    $admin_type = $payload->aud;
+
+    (!in_array($admin_type, ['admin', 'super_admin', 'main_admin'])) && $response->send_response(401, [
+        'error' => true,
+        'message' => "user not authorized"
+    ]);
+
+
+    $validator = new Validator();
+    $validator->validate_body($body, ['password',"new_password"]);
+
+    $password = $body->password;
+    $new_password = $body->new_password;
+    $id = $payload->data->id;
+
+    $validator->validate_password_with_response($new_password,5);
+
+    $admin = new Admin();
+    $current_admin = (new Serializer(['password']))->tuple($admin->get_admin_with_id($id));
+    $valid_password = password_verify($password, $current_admin['password']);
+
+
+    if ($valid_password) {
+        $new_password = password_hash($new_password,PASSWORD_DEFAULT);
+
+        if ($admin->update_admin_password($id, $new_password)) {
+            $response->send_response(200, [
+                'error' => false,
+                'message' => "password updated successfully",
+            ]);
+        }
+
+        $response->send_response(500, [
+            'error' => true,
+            'message' => "something went wrong",
+        ]);
+    }
+
+    $response->send_response(400, [
+        'error' => true,
+        'message' => "invalid password"
+    ]);
+}
+));
 
 
 $admin->get("/dummy-sign-up", fn() => $controller->public_controller(function ($body, $response) {

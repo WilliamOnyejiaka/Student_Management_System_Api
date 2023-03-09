@@ -78,9 +78,10 @@ $auth->get("/login",fn() => $controller->public_controller(function($body,$respo
             ];
 
             $active_user = (new Serializer($needed_values))->tuple($student->get_student_with_email($email));
+            $active_user['type'] = "student";
 
             $data = [
-                'needed_values' => ['id'],
+                'needed_values' => ['id','type'],
                 'data' => $active_user,
             ];
 
@@ -110,26 +111,26 @@ $auth->get("/login",fn() => $controller->public_controller(function($body,$respo
     ]);
 }));
 
-$auth->get('/token/access-token',fn() => $controller->access_token_controller(function($payload,$body,$response){
-    $student = new Student();
-    $id = $payload->data->id;
+// $auth->get('/token/access-token',fn() => $controller->access_token_controller(function($payload,$body,$response){
+//     $student = new Student();
+//     $id = $payload->data->id;
 
-    $active_user = (new Serializer(['id']))->tuple($student->get_student_with_id($id));
+//     $active_user = (new Serializer(['id']))->tuple($student->get_student_with_id($id));
 
-    if($active_user){
-        $token_attributes = new TokenAttributes($active_user, "students");
-        $access_token = JWT::encode($token_attributes->access_token_payload(), config("secret_key"), config("hash"));
+//     if($active_user){
+//         $token_attributes = new TokenAttributes($active_user, "students");
+//         $access_token = JWT::encode($token_attributes->access_token_payload(), config("secret_key"), config("hash"));
 
-        $response->send_response(200,[
-            'error' => false,
-            'token' => $access_token
-        ]);
-    }
+//         $response->send_response(200,[
+//             'error' => false,
+//             'token' => $access_token
+//         ]);
+//     }
 
-    $response->send_response(404,[
-        'error' => true,
-        'message' => "student does not exist or has been deleted",
-    ]);
-}));
+//     $response->send_response(404,[
+//         'error' => true,
+//         'message' => "student does not exist or has been deleted",
+//     ]);
+// }));
 
 $auth->run();

@@ -69,6 +69,32 @@ $student->get('/get-student-image',fn() => $controller->protected_controller(fun
     ]);
 }));
 
+$student->get('/get-student',fn() => $controller->protected_controller(function($payload,$body,$response){
+    $student_id = $payload->data->id;
+    $student = new Student();
+
+    $current_student = (new Serializer([
+        'id',
+        'name',
+        'email',
+        'class',
+        'image_url',
+        'created_at',
+        'updated_at'
+    ]))->tuple($student->get_student_with_id($student_id));
+    if($current_student){
+        $response->send_response(200,[
+            'error' => false,
+            'data' => $current_student
+        ]);
+    }
+
+    $response->send_response(500,[
+        'error' => true,
+        'message' => "something went wrong"
+    ]);
+}));
+
 $student->post('/file', fn() => $controller->public_controller(function ($body, $response) {
 
     $upload_response = (new ImageUpload())->uploadImage($_FILES['image_file']['tmp_name']);
