@@ -95,6 +95,26 @@ $student->get('/get-student',fn() => $controller->protected_controller(function(
     ]);
 }));
 
+$student->post('/upload-image-url', fn() => $controller->protected_controller(function ($payload,$body, $response) {
+    $image_url = $body->image_url;
+
+    $id = $payload->data->id;
+    $student = new Student();
+
+    if ($student->update_image_name($id, $image_url)) {
+        $response->send_response(200, [
+            'error' => false,
+            'message' => "image added successfully"
+        ]);
+    }
+
+    $response->send_response(500, [
+        'error' => true,
+        'message' => "something went wrong"
+    ]);
+}));
+
+
 $student->post('/file', fn() => $controller->public_controller(function ($body, $response) {
 
     $upload_response = (new ImageUpload())->uploadImage($_FILES['image_file']['tmp_name']);
@@ -106,9 +126,6 @@ $student->post('/file', fn() => $controller->public_controller(function ($body, 
     ]);
 }
 ));
-
-
-
 
 $student->run();
 
